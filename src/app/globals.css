@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+h1,
+h2,
+h3,
+h4,
+p,
+ul,
+li,
+code,
+pre {
+    margin: 20px;
+    color: #1f2937
+}
+
+h1 {
+    font-size: 2.25rem;
+    line-height: 2.5rem;
+    font-weight: 800;
+    color: #110d0eb3;
+}
+
+h2 {
+    font-size: 1.875rem;
+    line-height: 2.5rem;
+    font-weight: 400;
+    margin-left: 25px;
+    color: #110d0e80;
+}
+
+h3 {
+    font-size: 1.250rem;
+    line-height: 2.0rem;
+    font-weight: 300;
+    margin-left: 25px;
+}
+
+ul {
+    list-style-type: square;
+}
+
+code {
+    background-color: black;
+    padding: 5px;
+    margin: 20px;
+    color: #ddd
+}

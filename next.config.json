@@ -1,0 +1,11 @@
+{
+  "experimental": {
+    "outputFileTracingIncludes": {
+      "/*": [
+        "./cache/**/*"
+      ]
+    },
+    "serverComponentsExternalPackages": [
+    ]
+  }
+}
