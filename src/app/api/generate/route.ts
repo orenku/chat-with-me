@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 export async function POST(request: NextRequest) {
     try {
         await generateDatasource();
-        console.log('generate Success = ')
 
         return NextResponse.json({ message: "generate completed succesfuly" })
 

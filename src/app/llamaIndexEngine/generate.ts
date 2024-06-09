@@ -32,17 +32,12 @@ export async function generateDatasource() {
         chunkSize: CHUNK_SIZE,
         chunkOverlap: CHUNK_OVERLAP,
     });
-    console.log('1 - ', CHUNK_SIZE, CHUNK_OVERLAP)
 
     // Split documents, create embeddings and store them in the storage context
-    console.log('2 persisdir = ', path.join(tmpdir(), STORAGE_CACHE_DIR))
-
     const storageContext = await storageContextFromDefaults({
         persistDir: path.join(tmpdir(), STORAGE_CACHE_DIR)
     });
-    console.log('3')
     const documents = await getDocuments();
-    console.log('4 - number of docs = ', documents?.length)
     if (documents) {
         await VectorStoreIndex.fromDocuments(documents, {
             storageContext,

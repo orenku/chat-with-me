@@ -6,7 +6,6 @@ export async function createAndWriteToLog(fileName: string, message: string, pre
     try {
         const filePath: PathLike = path.join(tmpdir(), 'sessionLogs', fileName);
 
-        console.log('logging to tmp directory', filePath)
         // Create the directory structure if it doesn't exist
         const directoryPath = path.dirname(filePath);
         if (!existsSync(directoryPath)) {
