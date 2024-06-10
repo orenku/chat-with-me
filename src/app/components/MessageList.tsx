@@ -36,7 +36,7 @@ const MessageList: React.FC<MessageTypeProps> = ({ messages, className }) => {
                             <span className={`font-bold mx-2`}>
                                 {m.role === 'user' ? 'User: ' : 'AI: '}
                             </span>
-                            <span>{m.content}</span>
+                            <span className='whitespace-pre-wrap'>{m.content}</span>
                         </div>
                     ))}
                 </div>
