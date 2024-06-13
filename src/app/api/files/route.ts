@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import fs, { existsSync, mkdirSync } from 'fs';
+import { getServerSession } from "next-auth"
 import { tmpdir } from 'os';
 import path from "path";
 
 import { DATA_DIR } from "../../llamaIndexEngine/llm-config";
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    const session = await getServerSession()
+
+    if (!session?.user?.name) {
+        return NextResponse.json(
+            { error: "Not loggedin" },
+            { status: 400 }
+        );
+    }
+
     try {
         const formData = await req.formData();
 
@@ -67,6 +77,15 @@ export async function GET() {
 export async function DELETE(req: NextRequest) {
     const uploadPath = tmpdir() + /data/
     const reqBody = await req.json()
+
+    const session = await getServerSession()
+
+    if (!session?.user?.name) {
+        return NextResponse.json(
+            { error: "Not loggedin" },
+            { status: 400 }
+        );
+    }
 
     fs.rm(uploadPath + reqBody.fileName, (err) => {
         if (err) {

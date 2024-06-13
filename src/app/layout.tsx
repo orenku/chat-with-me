@@ -9,14 +9,18 @@ const roboto = Open_Sans({
 });
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
+import SessionProvider from "./components/SessionProvider";
+import { getServerSession } from "next-auth"
+
 config.autoAddCss = false
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   const elementStyle = `${roboto.className} `
+  const session = await getServerSession()
   return (
     <html lang="en" data-theme="mytheme">
       <body className={elementStyle}>
@@ -25,8 +29,10 @@ export default function RootLayout({
           {/* <div className="navbar bg-primary text-primary-content">Header</div> */}
           <div className="flex flex-row overflow-hidden h-full ">
             <Sidebar />
+            <SessionProvider session={session}>
 
-            <main className="flex w-2/3 grow bg-base-100 ">{children}</main>
+              <main className="flex w-2/3 grow bg-base-100 ">{children}</main>
+            </SessionProvider>
           </div>
         </div>
       </body>
