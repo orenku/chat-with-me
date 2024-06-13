@@ -1,9 +1,12 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 import "./globals.css";
 import React from "react";
 import Sidebar from "./components/Sidebar";
-const inter = Inter({ subsets: ["latin"] });
+const roboto = Open_Sans({
+  subsets: ["latin"],
+  style: "normal",
+});
 import '@fortawesome/fontawesome-svg-core/styles.css'
 import { config } from '@fortawesome/fontawesome-svg-core'
 config.autoAddCss = false
@@ -13,9 +16,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const elementStyle = `${inter.className} `
+  const elementStyle = `${roboto.className} `
   return (
-    <html lang="en" data-theme="pastel">
+    <html lang="en" data-theme="mytheme">
       <body className={elementStyle}>
         <div className="flex flex-col h-screen w-screen">
 

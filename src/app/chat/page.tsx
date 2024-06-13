@@ -18,10 +18,11 @@ const Chat = () => {
                 <span className={`loading loading-dots loading-lg text-primary mr-5 ${isLoading ? 'visible' : 'invisible'} `}></span>
 
                 <input
-                    className=" input input-accent w-full border-gray-300 rounded shadow-xl"
+                    className=" input input-accent w-full "
                     value={input}
                     placeholder="Ask me anything..."
                     onChange={handleInputChange}
+                    autoFocus={true}
                 />
             </form>
         </div>
