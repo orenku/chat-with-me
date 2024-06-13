@@ -1,13 +1,17 @@
 // import React from 'react'
 
 'use client'
-import { generateDatasource } from "@/src/app/llamaIndexEngine/generate"
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
+import { useSession } from "next-auth/react"
+import { redirect } from "next/navigation"
 import FileList from "../components/FileList";
+
 function File() {
 
+    const { data: session } = useSession()
 
-
+    if (!session || !session.user) {
+        redirect("api/auth/signin")
+    } 
 
     return (
         <div className="flex flex-col h-full">
