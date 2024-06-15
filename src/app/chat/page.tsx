@@ -11,7 +11,7 @@ const Chat = () => {
     const { messages, input, handleInputChange, handleSubmit, isLoading, } = useChat({ id: sessionId });
 
     return (
-        <div className=" flex flex-col h-full w-full max-w-3xl py-12 mx-auto">
+        <div className=" flex flex-col justify-between h-full w-full max-w-3xl pt-12 mx-auto">
             <MessageList messages={messages} className="flex-grow  overflow-y-auto scroll-snap-y-container" />
 
             <form onSubmit={(e) => handleSubmit(e, { options: { body: { sessionId } } })} className="flex flex-row w-full my-5 mx-auto">

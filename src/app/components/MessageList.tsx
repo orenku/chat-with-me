@@ -5,7 +5,7 @@ import Image from 'next/image'
 const WelcomeMessage = () => {
     return (
         <>
-            <p className='text-2xl max-w-2xl m-1 mx-auto font-bold text-primary-content/80'>You likely arrived here through my LinkedIn profile or by receiving a copy of my resume.</p>
+            <p className='text-2xl max-w-2xl m-1 mx-auto font-bold text-primary-content/80'>Welcome! You have reached my Digital AI Persona</p>
             <p className='text-md max-w-2xl m-2 mx-auto text-primary-content/80'>Curious to learn more about me? Feel free to ask anything. I&apos;ll do my best to provide an answer.</p>
             <p className='text-md max-w-2xl m-2 mx-auto text-primary-content/80'>For Example:</p>
             <Image src='/example.png' width={700} height={700} quality={100} alt="example" />
