@@ -30,15 +30,15 @@ export default async function RootLayout({
       <body className={elementStyle}>
         <div className="flex flex-col h-screen w-screen">
 
-          <div className="navbar bg-secondary text-primary-content sm:hidden">
-            <label htmlFor="my-drawer-2" className=" drawer-button lg:hidden">
+          <div className="h-[3rem]  bg-secondary text-primary-content md:hidden ">
+            <label htmlFor="my-drawer-2" className="flex align-middle">
               <a className='m-2 text-secondary-content' target="_blank" >
                 <FontAwesomeIcon icon={faBars} size="2xl" />
               </a>
             </label>
           </div>
 
-          <div className="drawer lg:drawer-open h-full">
+          <div className="drawer grow lg:drawer-open h-full">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col items-center justify-center">
               <SessionProvider session={session}>
