@@ -19,6 +19,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@types/uuid": "^9.0.8",
+    "@types/react": "^18",
     "ai": "^3.0.31",
     "dotenv": "^16.4.5",
     "gray-matter": "^4.0.3",
@@ -39,7 +40,6 @@
   },
   "devDependencies": {
     "@types/node": "^20",
-    "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.2.1",
