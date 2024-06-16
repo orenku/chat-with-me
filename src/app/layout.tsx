@@ -28,7 +28,7 @@ export default async function RootLayout({
   return (
     <html lang="en" data-theme="mytheme">
       <body className={elementStyle}>
-        <div className="flex flex-col h-screen w-screen">
+        <div className="flex flex-col h-dvh w-screen">
 
           <div className="h-[3rem]  bg-secondary text-primary-content md:hidden ">
             <label htmlFor="my-drawer-2" className="flex align-middle">
