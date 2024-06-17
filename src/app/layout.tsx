@@ -41,9 +41,9 @@ export default async function RootLayout({
           <div className="drawer grow lg:drawer-open h-full">
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
             <div className="drawer-content flex flex-col items-center justify-center">
-              <SessionProvider session={session}>
+              {/* <SessionProvider session={session}>
                 <main className="m-4 sm:m-0 grow bg-base-100 ">{children}</main>
-              </SessionProvider>
+              </SessionProvider> */}
 
             </div>
             <div className="drawer-side">
@@ -55,7 +55,7 @@ export default async function RootLayout({
                     <FontAwesomeIcon icon={faTimesCircle} size="2xl" />
                   </label>
                 </a>
-                <Sidebar />
+                {/* <Sidebar /> */}
               </div>
             </div>
           </div>
