@@ -1,12 +1,13 @@
 // import OpenAI from 'openai';
-import { OpenAIStream, StreamingTextResponse } from 'ai';
-import { getDataSource } from '../../llamaIndexEngine/generate';
+import { StreamingTextResponse } from 'ai';
 import { createChatEngine } from '../../llamaIndexEngine/engine';
 import { LlamaIndexStream } from "../../llamaIndexEngine/llamaIndex-stream";
 import { ChatMessage, MessageContent, OpenAI } from "llamaindex";
 import { NextResponse } from 'next/server';
-import { createAndWriteToLog } from '../../lib/logging'
+import { getLogger } from '../../lib/logging'
 import fs from 'fs'
+
+const Log = getLogger();
 
 const convertMessageContent = (
     textMessage: string,
@@ -57,7 +58,7 @@ export async function POST(req: Request) {
             // data?.imageUrl,
         );
 
-    createAndWriteToLog(sessionId, userMessage.content.toString(), 'Q: ')
+    Log.info({ sessionId, text: userMessage.content.toString(), user: 'User' })
 
     const response = await chatEngine.chat({
         message: userMessageContent,
@@ -67,7 +68,7 @@ export async function POST(req: Request) {
 
     const callbacks = {
         onCompletion: async (message: any) => {
-            createAndWriteToLog(sessionId, message, 'A: ')
+            Log.info({ sessionId, text: message, user: 'AI' })
         },
     };
 

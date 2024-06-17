@@ -11,8 +11,8 @@ const Chat = () => {
     const { messages, input, handleInputChange, handleSubmit, isLoading, } = useChat({ id: sessionId });
 
     return (
-        <div className=" flex flex-col justify-between h-full w-full max-w-3xl pt-12 mx-auto">
-            <MessageList messages={messages} className="flex-grow  overflow-y-auto scroll-snap-y-container" />
+        <div className=" flex flex-col justify-between h-full w-full max-h-dvh overflow-y-auto max-w-3xl pt-12 mx-auto">
+            <MessageList messages={messages} className="flex-grow w-full overflow-y-scroll" />
 
             <form onSubmit={(e) => handleSubmit(e, { options: { body: { sessionId } } })} className="flex flex-row w-full my-5 mx-auto">
                 <span className={`loading loading-dots loading-lg text-primary mr-5 ${isLoading ? 'visible' : 'invisible'} `}></span>
