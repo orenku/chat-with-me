@@ -30,19 +30,20 @@ export default async function RootLayout({
       <body className={elementStyle}>
         <div className="flex flex-col h-dvh w-screen">
 
-          <div className="h-[3rem]  bg-secondary text-primary-content md:hidden ">
-            <label htmlFor="my-drawer-2" className="flex align-middle">
-              <a className='m-2 text-secondary-content' target="_blank" >
-                <FontAwesomeIcon icon={faBars} size="2xl" />
-              </a>
-            </label>
-          </div>
 
-          <div className="drawer grow lg:drawer-open h-full">
+          <div className="drawer grow lg:drawer-open h-full overflow-y-hidden">
+            <div className="h-12 w-full text-primary md:hidden fixed">
+              <label htmlFor="my-drawer-2" className="flex align-middle">
+                <a className='m-1 text-primary-content' target="_blank" >
+                  <FontAwesomeIcon icon={faBars} size="2xl" />
+                </a>
+              </label>
+            </div>
+
             <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-            <div className="drawer-content flex flex-col items-center justify-center">
+            <div className="drawer-content max-h-full">
               <SessionProvider session={session}>
-                <main className="m-4 sm:m-0 grow bg-base-100 ">{children}</main>
+                <main className=" m-4 sm:m-0 grow bg-base-100 h-full">{children}</main>
               </SessionProvider>
 
             </div>
@@ -64,12 +65,3 @@ export default async function RootLayout({
     </html>
   );
 }
-
-
-{/* <div className="flex flex-row overflow-hidden h-full ">
-<Sidebar />
-<SessionProvider session={session}>
-
-  <main className="flex w-2/3 grow bg-base-100 ">{children}</main>
-</SessionProvider>
-</div> */}

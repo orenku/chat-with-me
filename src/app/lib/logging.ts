@@ -1,24 +1,23 @@
-import { existsSync, promises as fs, mkdirSync, PathLike } from 'fs';
-import path from 'path';
-import { tmpdir } from 'os';
+import { createLogger, format, transports, } from 'winston'
+import { PapertrailTransport } from 'winston-papertrail-transport'
 
-export async function createAndWriteToLog(fileName: string, message: string, prefix?: string) {
-    try {
-        const filePath: PathLike = path.join(tmpdir(), 'sessionLogs', fileName);
+export function getLogger(): any {
+    const consoleTransport = new transports.Console({
+        //TODO - implement
+    })
 
-        // Create the directory structure if it doesn't exist
-        const directoryPath = path.dirname(filePath);
-        if (!existsSync(directoryPath)) {
-            mkdirSync(directoryPath, { recursive: true });
-        }
+    const papertrailTransport = new PapertrailTransport({
+        host: process.env.PAPERTRAIL_HOST as string,
+        port: Number(process.env.PAPERTRAIL_PORT)
+    });
 
-        const fileExists = await fs.access(filePath, fs.constants.F_OK).then(() => true).catch(() => false);
+    const logger = createLogger({
+        format: format.combine(
+            format.colorize({ all: true }),
+            format.simple()),
+        transports: [consoleTransport, papertrailTransport],
+    })
 
-        const fileHandle = await fs.open(filePath, 'a+');
-
-        await fs.writeFile(fileHandle, prefix + message + '\r\n', 'utf8');
-
-    } catch (error) {
-        console.error('Error writing to file:', error);
-    }
+    return logger
 }
+
