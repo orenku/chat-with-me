@@ -13,8 +13,14 @@ const WelcomeMessage = () => {
     )
 }
 
+export interface DisplayMessage {
+    role: string,
+    text: string,
+    id: string
+}
+
 interface MessageTypeProps {
-    messages: Message[],
+    messages: DisplayMessage[],
     className?: string
 }
 
@@ -35,18 +41,20 @@ const MessageList: React.FC<MessageTypeProps> = ({ messages, className }) => {
             {messages.length === 0 ?
                 <WelcomeMessage /> :
                 <div className='flex flex-col'>
-                    {messages.map(m => (
-                        <div key={m.id} className={`flex flex-row items-end  my-2 ${m.role === 'user' ? 'justify-start' : 'justify-end'}`}>
-                            <div className={` mx-2 flex items-center justify-center w-10 h-10 bg-red-200 rounded-full ${m.role === 'user' ? '' : 'order-2'}`}>
-                                <span className='shadow-sm text-sm font-bold text-primary-content/80'>
-                                    {m.role === 'user' ? 'User ' : 'AI '}
-                                </span>
+                    {messages.map(m => {
+                        return (
+                            <div key={m.id} className={`flex flex-row items-end  my-2 ${m.role === 'User' ? 'justify-start' : 'justify-end'}`}>
+                                <div className={` mx-2 flex items-center justify-center w-10 h-10 bg-red-200 rounded-full ${m.role === 'User' ? '' : 'order-2'}`}>
+                                    <span className='shadow-sm text-sm font-bold text-primary-content/80'>
+                                        {m.role === 'User' ? 'User ' : 'AI '}
+                                    </span>
+                                </div>
+                                <div className={` w-4/5 p-2 shadow-sm ${m.role === 'User' ? USER_TEXT : LLM_TEXT}`} >
+                                    <span className='whitespace-pre-wrap'>{m.text}</span>
+                                </div>
                             </div>
-                            <div className={` w-4/5 p-2 shadow-sm ${m.role === 'user' ? USER_TEXT : LLM_TEXT}`} >
-                                <span className='whitespace-pre-wrap'>{m.content}</span>
-                            </div>
-                        </div>
-                    ))}
+                        )
+                    })}
                 </div>
             }
         </div>

@@ -8,7 +8,15 @@ import { v4 as uuidv4 } from 'uuid';
 const Chat = () => {
     const [sessionId, setsessionId] = useState<string>(Date.now().toString()); //using current time as sessionId - 
     //TODO - change to UUID
-    const { messages, input, handleInputChange, handleSubmit, isLoading, } = useChat({ id: sessionId });
+    const { messages: _messages, input, handleInputChange, handleSubmit, isLoading, } = useChat({ id: sessionId });
+
+    const messages = _messages.map((m) => {
+        return {
+            id: m.id,
+            text: m.content,
+            role: m.role === 'user' ? 'User' : 'AI'
+        }
+    })
 
     return (
         <div className=" flex flex-col justify-between h-full w-full max-h-dvh overflow-y-auto max-w-3xl pt-12 mx-auto">

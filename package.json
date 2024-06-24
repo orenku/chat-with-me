@@ -26,6 +26,7 @@
     "dotenv": "^16.4.5",
     "gray-matter": "^4.0.3",
     "llamaindex": "^0.2.8",
+    "mongoose": "^8.4.3",
     "next": "^14.2.1",
     "next-auth": "^4.24.7",
     "pdf2json": "^3.0.5",

@@ -3,8 +3,12 @@ import { StreamingTextResponse } from 'ai';
 import { createChatEngine } from '../../llamaIndexEngine/engine';
 import { LlamaIndexStream } from "../../llamaIndexEngine/llamaIndex-stream";
 import { ChatMessage, MessageContent, OpenAI } from "llamaindex";
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 import { getLogger } from '../../lib/logging'
+import dbConnect from '../../lib/dbConnect'
+import Chat from '../../models/Chat'
+import Session from '../../models/Session'
+
 import fs from 'fs'
 
 const Log = getLogger();
@@ -28,10 +32,31 @@ const convertMessageContent = (
     ];
 };
 
+export async function GET(req: NextRequest) {
+    const url = new URL(req.url);
+    const searchParams = new URLSearchParams(url.search);
+    const sessionId = searchParams.get('sessionId');
+
+    await dbConnect()
+    try {
+        const messages = await Chat.find({ sessionId })
+        return NextResponse.json(messages)
+    } catch (error) {
+        return NextResponse.json(
+            { error },
+            { status: 400 }
+        )
+    }
+}
+
 export async function POST(req: Request) {
     const body = await req.json();
     const { messages, data, sessionId }: { messages: ChatMessage[]; data: any, sessionId: string } = body;
     const userMessage = messages.pop()
+
+    await dbConnect()
+    await Session.findOneAndUpdate({ sessionId: sessionId }, { sessionId: sessionId, userId: '1' }, { upsert: true, new: true });
+
 
     if (!messages || !userMessage || userMessage.role !== "user") {
         return NextResponse.json(
@@ -60,6 +85,20 @@ export async function POST(req: Request) {
 
     Log.info({ sessionId, text: userMessage.content.toString(), user: 'User' })
 
+    try {
+        const chat = await Chat.create({
+            role: 'User',
+            text: userMessage.content.toString(),
+            sessionId,
+            userId: 1 // TODO - Add multy user support in the future
+        })
+    } catch (error) {
+        return NextResponse.json(
+            { error: "Internal DB error" },
+            { status: 400 }
+        );
+    }
+
     const response = await chatEngine.chat({
         message: userMessageContent,
         chatHistory: messages,
@@ -68,6 +107,13 @@ export async function POST(req: Request) {
 
     const callbacks = {
         onCompletion: async (message: any) => {
+            const chat = await Chat.create({
+                role: 'AI',
+                text: message,
+                sessionId,
+                userId: 1 // TODO - Add multy user support in the future
+            })
+
             Log.info({ sessionId, text: message, user: 'AI' })
         },
     };
