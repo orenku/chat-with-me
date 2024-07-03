@@ -67,7 +67,7 @@ const ChatHistory = () => {
 
                 </form>
                 <h3 className="font-bold text-lg">Hello!</h3>
-                <MessageList messages={messages} className="flex-grow w-full overflow-y-scroll" />
+                <MessageList messages={messages} className="flex-grow w-full overflow-y-scroll" isLoading={false} />
             </div>
         </dialog>
     </div>)
