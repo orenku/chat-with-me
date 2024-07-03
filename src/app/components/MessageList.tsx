@@ -2,16 +2,6 @@ import React, { useEffect, useRef } from 'react'
 import { Message } from 'ai/react'
 import Image from 'next/image'
 
-const WelcomeMessage = () => {
-    return (
-        <>
-            <p className='text-2xl max-w-2xl m-1 mx-auto font-bold text-primary-content/80'>Welcome! You have reached my Digital AI Persona</p>
-            <p className='text-md max-w-2xl m-2 mx-auto text-primary-content/80'>Curious to learn more about me? Feel free to ask anything. I&apos;ll do my best to provide an answer.</p>
-            <p className='text-md max-w-2xl m-2 mx-auto text-primary-content/80'>For Example:</p>
-            <Image src='/example.png' width={700} height={700} quality={100} alt="example" />
-        </>
-    )
-}
 
 export interface DisplayMessage {
     role: string,
@@ -21,10 +11,11 @@ export interface DisplayMessage {
 
 interface MessageTypeProps {
     messages: DisplayMessage[],
-    className?: string
+    className?: string,
+    isLoading: boolean
 }
 
-const MessageList: React.FC<MessageTypeProps> = ({ messages, className }) => {
+const MessageList: React.FC<MessageTypeProps> = ({ messages, className, isLoading }) => {
     const messageListRef = useRef<HTMLDivElement>(null);
     const USER_TEXT = 'bg-primary text-primary-content self-start rounded-t-xl rounded-br-xl'
     const LLM_TEXT = 'bg-primary/25 text-primary-content self-end rounded-t-xl rounded-bl-xl'
@@ -34,12 +25,10 @@ const MessageList: React.FC<MessageTypeProps> = ({ messages, className }) => {
         if (messageListRef.current) {
             messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
         }
-    }, [messages]); //
+    }, [messages]); 
 
     return (
         <div className={`${className} `} ref={messageListRef}>
-            {messages.length === 0 ?
-                <WelcomeMessage /> :
                 <div className='flex flex-col'>
                     {messages.map(m => {
                         return (
@@ -50,13 +39,15 @@ const MessageList: React.FC<MessageTypeProps> = ({ messages, className }) => {
                                     </span>
                                 </div>
                                 <div className={` w-4/5 p-2 shadow-sm ${m.role === 'User' ? USER_TEXT : LLM_TEXT}`} >
-                                    <span className='whitespace-pre-wrap'>{m.text}</span>
+                                    <span className='whitespace-pre-wrap text-xl md:text-base'>{m.text}</span>
                                 </div>
                             </div>
                         )
                     })}
-                </div>
-            }
+            </div>
+            <div className={`${isLoading ? 'visible' : 'invisible'} flex justify-center`}>
+                <span className='loading loading-dots loading-lg text-primary mr-5 center'></span>
+            </div>
         </div>
     )
 }

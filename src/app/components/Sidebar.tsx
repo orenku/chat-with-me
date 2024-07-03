@@ -13,7 +13,7 @@ const aboutMe: string | TrustedHTML = process.env.ABOUT_ME || ""
 
 const Sidebar = () => {
     return (
-        <div className=" h-full p-5 bg-secondary flex flex-col text-sm md:text-base">
+        <div className=" h-full p-5 bg-secondary flex flex-col text-base">
             <div className='flex-grow'>
                 <div className='text-1xl m-1 text-accent-content'>Hi, my name is</div>
                 <div className="text-3xl md:text-4xl m-1 font-extrabold text-accent-content">{name}.</div>
