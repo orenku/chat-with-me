@@ -28,21 +28,27 @@ async function getDocuments() {
 }
 
 export async function generateDatasource() {
-    const serviceContext: ServiceContext = serviceContextFromDefaults({
-        chunkSize: CHUNK_SIZE,
-        chunkOverlap: CHUNK_OVERLAP,
-    });
-
-    // Split documents, create embeddings and store them in the storage context
-    const storageContext = await storageContextFromDefaults({
-        persistDir: path.join(tmpdir(), STORAGE_CACHE_DIR)
-    });
-    const documents = await getDocuments();
-    if (documents) {
-        await VectorStoreIndex.fromDocuments(documents, {
-            storageContext,
-            serviceContext,
+    try {
+        const serviceContext: ServiceContext = serviceContextFromDefaults({
+            chunkSize: CHUNK_SIZE,
+            chunkOverlap: CHUNK_OVERLAP,
         });
+
+        // Split documents, create embeddings and store them in the storage context
+        const storageContext = await storageContextFromDefaults({
+            persistDir: path.join(tmpdir(), STORAGE_CACHE_DIR)
+        });
+        const documents = await getDocuments();
+        if (documents) {
+            await VectorStoreIndex.fromDocuments(documents, {
+                storageContext,
+                serviceContext,
+            });
+        } else {
+            console.log('Error in generateDatasource - no documents!')
+        }
+    } catch (err) {
+        console.log('Error in generating data source: ', err);
     }
 }
 
